@@ -23,16 +23,6 @@ public class LocationMapper {
                 .build();
     }
 
-//    public static Location toLocation(LocationInputDto locationInputDto) {
-//        return Location.builder()
-//                .lat(locationInputDto.getLat())
-//                .lon(locationInputDto.getLon())
-//                .name(locationInputDto.getName())
-//                .description(locationInputDto.getDescription())
-//                .radius(locationInputDto.getRadius())
-//                .build();
-//    }
-
     public static Location toLocation(LocationDto locationDto) {
         return Location.builder()
                 .lat(locationDto.getLat())

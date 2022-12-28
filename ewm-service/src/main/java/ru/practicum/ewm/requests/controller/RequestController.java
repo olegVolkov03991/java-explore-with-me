@@ -4,7 +4,6 @@ package ru.practicum.ewm.requests.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.requests.model.dto.RequestAllOutputDto;
 import ru.practicum.ewm.requests.model.dto.RequestOutputDto;
 import ru.practicum.ewm.requests.services.RequestServiceImpl;
 
@@ -31,9 +30,7 @@ public class RequestController {
     }
 
 
-    /*
-    получение информации о заявках пользователей на участие в других мероприятиях
-    */
+
 
     @GetMapping
     public List<RequestOutputDto> getInformationAboutUserApplicationsForParticipationInOtherEvents(@Valid @PathVariable Long userId) {

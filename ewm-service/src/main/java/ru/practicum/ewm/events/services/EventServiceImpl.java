@@ -140,7 +140,7 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
         if(!event.getInitiator().getId().equals(userId)){
-            log.error("/////////");
+            log.error("this user id not found");
         }
         long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
         long views = statisticsClient.getStatsForEvent(event.getId());
@@ -197,16 +197,13 @@ public class EventServiceImpl implements EventService {
                 .stream()
                 .map(this::getEventOutputDtoShort)
                 .collect(Collectors.toList());
-
-       // events.stream().map(this::getEventOutputDtoShort).collect(Collectors.toList());
-
         if (onlyAvailable != null && onlyAvailable) {
             events = events.stream()
                     .filter(e -> e.getParticipantLimit() == 0)
                     .filter(e -> e.getParticipantLimit() > requestRepository.getCountConfirmedRequestByEventId(e.getId()))
                     .collect(Collectors.toList());
         }
-        //List<EventOutputDto> results = null;
+
 
         return events;
     }

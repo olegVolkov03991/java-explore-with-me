@@ -23,7 +23,7 @@ public class LocationController {
     private final LocationServiceImpl locationService;
 
     /**
-     * Добавление новой локации
+
      *
      * @param locationInputDto - данные добавляемой локации
      */
@@ -33,7 +33,7 @@ public class LocationController {
     }
 
     /**
-     * Получение полной информации о локации
+
      *
      * @param locId - id локации
      */
@@ -43,9 +43,7 @@ public class LocationController {
     }
 
     /**
-     * Возвращает информацию обо всех локациях событий включая расстояние до места,
-     * находящихся в области диаметром distance и центром lat,lon,
-     * имеющих соответствующее название и описание
+
      *
      * @param lat         - широта точки центра области поиска
      * @param lon         - долгота точки центра области поиска

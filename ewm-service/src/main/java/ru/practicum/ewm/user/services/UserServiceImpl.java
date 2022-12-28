@@ -27,9 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
 
-    /*
-    create user
-    */
+
     @Override
     @Transactional
     public UserOutputDto create(UserInputDto userInputDto) {
@@ -44,9 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    /*
-    delete user by UserId
-    */
+
     @Override
     @Transactional
     public void remove(long id) {
@@ -54,9 +50,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    /*
-    get users by list id
-    */
+
     @Override
     public List<UserOutputDto> getUsers(List<Long> ids, Integer from, Integer size) {
         Page<User> users;

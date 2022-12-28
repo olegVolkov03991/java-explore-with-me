@@ -22,9 +22,6 @@ public class AdminEventsController {
 
     private final EventServiceImpl eventService;
 
-    /*
-    получение всех событий по заданным параметрам
-    * */
     @GetMapping
     public List<EventOutputDto> getAllEventsByParameters(@Valid @RequestParam(required = false) List<Long> users,
                                                          @Valid @RequestParam(required = false) List<State> states,
@@ -42,16 +39,14 @@ public class AdminEventsController {
         return eventService.publishingEvent(eventId);
     }
 
-    /*rejected ad event*/
+
     @PatchMapping("/{eventId}/reject")
     public EventOutputDto rejectionEvent(@Valid @PathVariable long eventId) {
         return eventService.rejectionEvent(eventId);
     }
 
 
-    /*
-    редактирование события администратором
-    * */
+
     @PutMapping("/{eventId}")
     public EventOutputDto editingEventByAdmin(@PathVariable long eventId,
                                               @RequestBody EventInputDto inputEvent) {

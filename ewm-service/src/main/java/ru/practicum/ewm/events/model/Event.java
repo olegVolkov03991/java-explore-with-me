@@ -28,62 +28,41 @@ public class Event {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    /*
-     заголовок
-     * */
-    private String title; // заголовок
 
-    /*
-     краткое описание
-     * */
-    private String annotation; // краткое описание
+    private String title;
 
-    /*
-     полное описание
-     * */
-    private String description; // описание
 
-    /*
-     Ограничение на количество участников. Значение 0 - означает отсутствие ограничения
-     * */
+    private String annotation;
+
+
+    private String description;
+
     @Column(name = "participant_limit")
     private Long participantLimit;
 
-    /*
-     Нужно ли оплачивать участие
-     * */
+
     private Boolean paid;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    /*
-     @JsonSerialize применяется для указания класса,
-     с помощью которого будет производиться десериализация сущности.
-     */
+
     @Column(name = "event_date", columnDefinition = "TIMESTAMP")
     @JsonDeserialize(using = CustomDateDeserializer.class)
 
-    /*
-    валидация, при которой значение переменной должно быть в только в будущем времени
-    Дата и время на которые намечено событие
-    */
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Future
     private LocalDateTime eventDate;
 
-    /*
-    Дата и время создания события
-    */
+
     @Column(name = "created_on")
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdOn;
 
-    /*
-    Дата и время публикации события
-    */
+
     @Column(name = "published_on")
     @JsonDeserialize(using = CustomDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -94,24 +73,18 @@ public class Event {
     private User initiator;
 
 
-    /**
-     * Нужна ли пре-модерация заявок на участие
-     */
+
     @Column(name = "request_moderation")
     @Builder.Default
     private Boolean requestModeration = true;
 
-    /*
-     * Список состояний жизненного цикла события
-     * */
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private State state = State.PENDING;
 
 
-    /*
-     * локация события
-     * */
+
     @ManyToOne()
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;

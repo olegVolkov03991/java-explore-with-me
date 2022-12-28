@@ -9,7 +9,6 @@ import ru.practicum.ewm.events.repository.EventRepository;
 import ru.practicum.ewm.exceptions.ObjectNotFoundException;
 import ru.practicum.ewm.requests.model.Request;
 import ru.practicum.ewm.requests.model.Status;
-import ru.practicum.ewm.requests.model.dto.RequestAllOutputDto;
 import ru.practicum.ewm.requests.model.dto.RequestMapper;
 import ru.practicum.ewm.requests.model.dto.RequestOutputDto;
 import ru.practicum.ewm.requests.repository.RequestRepository;

@@ -10,8 +10,4 @@ public interface LocationOutputDtoWithDistance {
     String getDescription();
 
     String getName();
-
-    Double getRadius();
-
-    Double getDistance();
 }

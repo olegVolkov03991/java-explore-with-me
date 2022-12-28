@@ -14,15 +14,4 @@ public class RequestMapper {
                 .created(request.getCreated())
                 .build();
     }
-
-    public static RequestAllOutputDto requestAllOutputDto(Request request) {
-        return RequestAllOutputDto.builder()
-                .id(request.getId())
-                .requester(request.getRequester().getId())
-                .event(request.getEvent().getId())
-                .status(request.getStatus())
-                .created(request.getCreated())
-
-                .build();
-    }
 }
