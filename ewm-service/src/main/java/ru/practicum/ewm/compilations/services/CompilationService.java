@@ -22,7 +22,8 @@ public interface CompilationService {
 
     void deleteCompilation(long compId);
 
+    void unpinCompilation(long compId);
+
     void pinCompilation(long compId);
 
-    void unpinCompilation(long compId);
 }

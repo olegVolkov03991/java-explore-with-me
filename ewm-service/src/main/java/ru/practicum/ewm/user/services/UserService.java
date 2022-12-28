@@ -6,9 +6,7 @@ import ru.practicum.ewm.user.model.dto.UserOutputDto;
 import java.util.List;
 
 public interface UserService {
-    UserOutputDto create(UserInputDto userInputDto);
-
-    void remove(long id);
-
     List<UserOutputDto> getUsers(List<Long> ids, Integer from, Integer size);
+    UserOutputDto create(UserInputDto userInputDto);
+    void remove(long id);
 }

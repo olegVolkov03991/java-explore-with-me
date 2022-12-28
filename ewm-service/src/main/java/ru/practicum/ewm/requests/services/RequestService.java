@@ -6,15 +6,10 @@ import java.util.List;
 
 public interface RequestService {
 
-    RequestOutputDto create(long requestorId, Long eventId);
-
-    List<RequestOutputDto> getRequestByInitiator(Long userId, Long eventId);
-
-    RequestOutputDto CancelYourEventRequest(Long userId, Long requestId);
-
-    RequestOutputDto RejectionApplicationByUserEvent(Long userId, Long eventId, Long reqId);
-
-    RequestOutputDto ConfirmationApplicationByUserEvent(Long userId, Long eventId, Long reqId);
-
     List<RequestOutputDto> getInformationAboutUserApplicationsForParticipationInOtherEvents(Long userId);
+    RequestOutputDto ConfirmationApplicationByUserEvent(Long userId, Long eventId, Long reqId);
+    RequestOutputDto RejectionApplicationByUserEvent(Long userId, Long eventId, Long reqId);
+    List<RequestOutputDto> getRequestByInitiator(Long userId, Long eventId);
+    RequestOutputDto CancelYourEventRequest(Long userId, Long requestId);
+    RequestOutputDto create(long requestorId, Long eventId);
 }
