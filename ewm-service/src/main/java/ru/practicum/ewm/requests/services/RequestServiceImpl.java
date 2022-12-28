@@ -66,12 +66,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public RequestAllOutputDto CancelYourEventRequest(Long userId, Long requestId) {
+    public RequestOutputDto CancelYourEventRequest(Long userId, Long requestId) {
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(ObjectNotFoundException::new);
         request.setStatus(Status.CANCELED);
-        RequestAllOutputDto requestAllOutputDto = RequestMapper.requestAllOutputDto(requestRepository.save(request), userId, request.getEvent().getId());
-        return requestAllOutputDto;
+        RequestOutputDto requestOutputDto = RequestMapper.toRequestDto(requestRepository.save(request));
+        return requestOutputDto;
     }
 
     @Override

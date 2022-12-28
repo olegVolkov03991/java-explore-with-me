@@ -15,11 +15,11 @@ public class RequestMapper {
                 .build();
     }
 
-    public static RequestAllOutputDto requestAllOutputDto(Request request, Long userId, Long eventId) {
+    public static RequestAllOutputDto requestAllOutputDto(Request request) {
         return RequestAllOutputDto.builder()
                 .id(request.getId())
-                .requester(userId)
-                .event(eventId)
+                .requester(request.getRequester().getId())
+                .event(request.getEvent().getId())
                 .status(request.getStatus())
                 .created(request.getCreated())
 

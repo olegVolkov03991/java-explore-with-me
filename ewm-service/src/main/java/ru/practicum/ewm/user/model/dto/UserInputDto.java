@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class UserInputDto {
     @NotNull
     private String name;
+
     @NotNull
     private String email;
 }
