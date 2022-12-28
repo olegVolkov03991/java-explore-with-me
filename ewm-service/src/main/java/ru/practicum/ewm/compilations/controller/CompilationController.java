@@ -11,8 +11,8 @@ import ru.practicum.ewm.compilations.services.CompilationServiceImpl;
 import javax.validation.Valid;
 
 @Validated
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/admin/compilations")
 public class CompilationController {
 
@@ -24,39 +24,32 @@ public class CompilationController {
     }
 
     @DeleteMapping("/{compId}")
-    public void deleteCompilation(@PathVariable long compId) {
+    public void deleteCompilation(@Valid @PathVariable long compId) {
         compilationsService.deleteCompilation(compId);
     }
 
     @PatchMapping("/{compId}/events/{eventId}")
-    void addEventToCompilation(@PathVariable long compId,
-                               @PathVariable long eventId) {
+    void addEventToCompilation(@Valid @PathVariable long compId,
+                               @Valid @PathVariable long eventId) {
         compilationsService.addEventToCompilation(compId, eventId);
 
     }
 
     @DeleteMapping("/{compId}/events/{eventId}")
-    void deleteEventInCompilationForEventId(@PathVariable long compId,
-                                            @PathVariable long eventId) {
+    void deleteEventInCompilationForEventId(@Valid @PathVariable long compId,
+                                            @Valid @PathVariable long eventId) {
         compilationsService.deleteEventInCompilation(compId, eventId);
     }
 
     @PatchMapping(("/{compId}/pin"))
-    void pinCompilation(@PathVariable long compId) {
+    void pinCompilation(@Valid @PathVariable long compId) {
         compilationsService.pinCompilation(compId);
     }
 
     @DeleteMapping(("/{compId}/pin"))
-    void unpinCompilation(@PathVariable long compId) {
+    void unpinCompilation(@Valid @PathVariable long compId) {
         compilationsService.unpinCompilation(compId);
     }
-
-//    @GetMapping()
-//    public List<CompilationOutputDto> getCompilations(@RequestParam(required = false) Boolean pinned,
-//                                                      @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-//                                                      @RequestParam(defaultValue = "10") @Positive Integer size) {
-//        return compilationsService.getCompilations(pinned, from, size);
-//    }
 
 
 }

@@ -28,7 +28,7 @@ public class LocationController {
      * @param locationInputDto - данные добавляемой локации
      */
     @PostMapping()
-    public LocationOutputDto addLocation(@RequestBody @Valid LocationInputDto locationInputDto) {
+    public LocationOutputDto addLocation(@Valid @RequestBody LocationInputDto locationInputDto) {
         return locationService.addLocation(locationInputDto);
     }
 
@@ -38,7 +38,7 @@ public class LocationController {
      * @param locId - id локации
      */
     @GetMapping("/{locId}")
-    public LocationOutputDto getLocationById(@PathVariable Long locId) {
+    public LocationOutputDto getLocationById(@Valid @PathVariable Long locId) {
         return locationService.getLocationById(locId);
     }
 
@@ -56,13 +56,13 @@ public class LocationController {
      * @param size        - количество элементов в наборе
      */
     @GetMapping
-    public List<LocationOutputDtoWithDistance> searchLocations(@RequestParam Double lat,
-                                                               @RequestParam Double lon,
-                                                               @RequestParam Double distance,
-                                                               @RequestParam(required = false) String name,
-                                                               @RequestParam(required = false) String description,
-                                                               @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-                                                               @RequestParam(defaultValue = "10") @Positive Integer size) {
+    public List<LocationOutputDtoWithDistance> searchLocations(@Valid @RequestParam Double lat,
+                                                               @Valid @RequestParam Double lon,
+                                                               @Valid @RequestParam Double distance,
+                                                               @Valid @RequestParam(required = false) String name,
+                                                               @Valid @RequestParam(required = false) String description,
+                                                               @Valid @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                                                               @Valid @RequestParam(defaultValue = "10") @Positive Integer size) {
         return locationService.searchLocations(lat, lon, distance, name, description, from, size);
     }
 }

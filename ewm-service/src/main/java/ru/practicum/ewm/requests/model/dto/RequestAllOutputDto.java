@@ -2,10 +2,7 @@ package ru.practicum.ewm.requests.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
-
-import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.requests.model.Status;
-import ru.practicum.ewm.user.model.User;
 
 import java.time.LocalDateTime;
 

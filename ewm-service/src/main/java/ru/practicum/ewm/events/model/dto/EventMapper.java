@@ -33,7 +33,7 @@ public class EventMapper {
     }
 
 
-    public static EventOutputDto eventOutputDto(Event event, long request) {
+    public static EventOutputDto eventOutputDto(Event event, long request, long views) {
         return EventOutputDto.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -50,51 +50,7 @@ public class EventMapper {
                 .requestModeration(event.getRequestModeration())
                 .state(event.getState())
                 .title(event.getTitle())
-                //   .views(views)
-                .build();
-    }
-
-    public static EventOutputShortDto eventOutputDtoShort(Event event, Long request, Long views) {
-        return EventOutputShortDto.builder()
-                .annotation(event.getAnnotation())
-                .category(event.getCategory())
-                .confirmedRequests(request)
-                .eventDate(event.getEventDate())
-                .id(event.getId())
-                .initiator(UserMapper.userOutputDto(event.getInitiator()))
-                .paid(event.getPaid())
-                .title(event.getTitle())
-                .description(event.getDescription())
-                .state(event.getState())
-                .participantLimit(event.getParticipantLimit())
-                .createdOn(event.getCreatedOn())
-                .publishedOn(event.getPublishedOn())
-                .location(LocationMapper.toLocationDto(event.getLocation()))
-                .requestModeration(event.getRequestModeration())
                 .views(views)
-                .build();
-    }
-
-
-
-    public static EventFullDto toEventFullDto(Event event, Long request){
-        return EventFullDto.builder()
-                .id(event.getId())
-                .annotation(event.getAnnotation())
-                .category(event.getCategory())
-                .confirmedRequests(request)
-                .createdOn(event.getCreatedOn())
-                .description(event.getDescription())
-                .eventDate(event.getEventDate())
-                .initiator(UserMapper.userOutputDto(event.getInitiator()))
-                .location(LocationMapper.toLocationDto(event.getLocation()))
-                .paid(event.getPaid())
-                .participantLimit(event.getParticipantLimit())
-                .publishedOn(event.getPublishedOn())
-                .requestModeration(event.getRequestModeration())
-                .state(event.getState())
-                .title(event.getTitle())
-          //      .views(views)
                 .build();
     }
 

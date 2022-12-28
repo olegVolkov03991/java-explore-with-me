@@ -1,10 +1,10 @@
-package ru.practicum.ewmservice.user.repository;
+package ru.practicum.ewm.user.repository;
 
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.practicum.ewmservice.user.model.dto.User;
+import ru.practicum.ewm.user.model.User;
 
 import java.util.List;
 

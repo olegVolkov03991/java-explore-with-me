@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventOutputShortDto create(long userId, EventInputDto eventInputDto) {
+    public EventOutputDto create(long userId, EventInputDto eventInputDto) {
         User initiator = userRepository.findById(userId)
                 .orElseThrow(ObjectNotFoundException::new);
         Category category = getCategory(eventInputDto.getCategory());
@@ -50,23 +50,24 @@ public class EventServiceImpl implements EventService {
         Event event = EventMapper.toEvent(eventInputDto, category, initiator, location);
         eventRepository.save(event);
         long views = statisticsClient.getStatsForEvent(event.getId());
-        EventOutputShortDto eventOutputShortDto = EventMapper.eventOutputDtoShort(event, 0L, views);
+        EventOutputDto eventOutputShortDto = EventMapper.eventOutputDto(event, 0L, views);
         log.info("<create EVENT> create {} ", eventOutputShortDto);
         return eventOutputShortDto;
     }
 
     @Override
-    public EventFullDto getPublishedEventById(long id) {
+    public EventOutputDto getPublishedEventById(long id) {
         eventRepository.findById(id)
                 .orElseThrow(ObjectNotFoundException::new);
         Event event = eventRepository.getById(id);
         long requestId = requestRepository.getCountConfirmedRequestByEventId(id);
-        return EventMapper.toEventFullDto(event, requestId);
+        long views = statisticsClient.getStatsForEvent(event.getId());
+        return EventMapper.eventOutputDto(event, requestId, views);
 
     }
 
     @Override
-    public List<EventOutputShortDto> getAllEventsByUserId(long userId, Integer from, Integer size) {
+    public List<EventOutputDto> getAllEventsByUserId(long userId, Integer from, Integer size) {
         return eventRepository.getEventsByInitiatorIdOrderByIdAsc(userId, getPageRequest(from, size))
                 .stream()
                 .map(this::getEventOutputDtoShort)
@@ -75,7 +76,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventOutputShortDto publishingEvent(long eventId) {
+    public EventOutputDto publishingEvent(long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
         if (event.getState() == State.PUBLISHED) {
@@ -86,14 +87,14 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
         long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
         long views = statisticsClient.getStatsForEvent(event.getId());
-        EventOutputShortDto eventOutputShortDto = EventMapper.eventOutputDtoShort(event, request, views);
+        EventOutputDto eventOutputShortDto = EventMapper.eventOutputDto(event, request, views);
         log.info("<publishingEvent EVENT> publishing {} ", eventOutputShortDto);
         return eventOutputShortDto;
     }
 
     @Override
     @Transactional
-    public EventOutputShortDto rejectionEvent(long eventId) {
+    public EventOutputDto rejectionEvent(long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
         if (event.getState() == State.CANCELED) {
@@ -103,7 +104,7 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
         long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
         long views = statisticsClient.getStatsForEvent(event.getId());
-        EventOutputShortDto eventOutputShortDto = EventMapper.eventOutputDtoShort(event, request, views);
+        EventOutputDto eventOutputShortDto = EventMapper.eventOutputDto(event, request, views);
         log.info("<rejectionEvent > rejection {} ", eventOutputShortDto);
         return eventOutputShortDto;
     }
@@ -127,21 +128,23 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(ObjectNotFoundException::new);
         Location location = getOrCreateLocation(eventInputDto);
         Event event = eventRepository.save(EventMapper.toEvent(eventInputDto, category, user, location));
-        EventOutputDto eventOutputDto = EventMapper.eventOutputDto(event, 0L);
+        long views = statisticsClient.getStatsForEvent(event.getId());
+        EventOutputDto eventOutputDto = EventMapper.eventOutputDto(event, 0L, views);
         log.info("update event {} ", eventOutputDto);
         return eventOutputDto;
 
     }
 
     @Override
-    public EventFullDto getEventByInitiator(Long userId, Long eventId) {
+    public EventOutputDto getEventByInitiator(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
         if(!event.getInitiator().getId().equals(userId)){
             log.error("/////////");
         }
         long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
-        return EventMapper.toEventFullDto(event, request);
+        long views = statisticsClient.getStatsForEvent(event.getId());
+        return EventMapper.eventOutputDto(event, request, views);
     }
 
     private Event getEvent(long id) {
@@ -151,7 +154,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventOutputShortDto> getAllEvents(List<Long> users,
+    public List<EventOutputDto> getAllEvents(List<Long> users,
                                                   List<State> states,
                                                   List<Long> categories,
                                                   String rangeStart,
@@ -166,7 +169,7 @@ public class EventServiceImpl implements EventService {
                         getPageRequest(from, size))
                 .stream()
                 .collect(Collectors.toList());
-        List<EventOutputShortDto> outputEvents = events
+        List<EventOutputDto> outputEvents = events
                 .stream()
                 .map(this::getFullOutputDto)
                 .collect(Collectors.toList());
@@ -176,7 +179,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventOutputShortDto> searchEventsByUser(String text,
+    public List<EventOutputDto> searchEventsByUser(String text,
                                                         List<Long> categories,
                                                         Boolean paid,
                                                         String rangeStart,
@@ -185,14 +188,17 @@ public class EventServiceImpl implements EventService {
                                                         String sort,
                                                         Integer from,
                                                         Integer size) {
-        List<Event> events = eventRepository.getEvents(text,
+        List<EventOutputDto> events = eventRepository.getEvents(text,
                         categories,
                         paid,
                         rangeStart,
                         rangeEnd,
                         getPageRequest(from, size))
                 .stream()
+                .map(this::getEventOutputDtoShort)
                 .collect(Collectors.toList());
+
+       // events.stream().map(this::getEventOutputDtoShort).collect(Collectors.toList());
 
         if (onlyAvailable != null && onlyAvailable) {
             events = events.stream()
@@ -200,32 +206,14 @@ public class EventServiceImpl implements EventService {
                     .filter(e -> e.getParticipantLimit() > requestRepository.getCountConfirmedRequestByEventId(e.getId()))
                     .collect(Collectors.toList());
         }
-        List<EventOutputShortDto> results = null;
-        if (sort != null) {
-            switch (sort) {
-                case "EVENT_DATE":
-                    results = events.stream()
-                            .sorted(Comparator.comparing(Event::getEventDate))
-                            .map(this::getEventOutputDtoShort)
-                            .collect(Collectors.toList());
-                    break;
-                case "VIEWS":
-                    results = events.stream()
-                            .map(this::getEventOutputDtoShort)
-                            .sorted(Comparator.comparing(EventOutputShortDto::getViews))
-                            .collect(Collectors.toList());
-                    break;
-                default: {
-                    throw new BadReqestException();
-                }
-            }
-        }
-        return results;
+        //List<EventOutputDto> results = null;
+
+        return events;
     }
 
     @Override
     @Transactional
-    public EventOutputShortDto editingEventByAdmin(long eventId, EventInputDto eventInputDto) {
+    public EventOutputDto editingEventByAdmin(long eventId, EventInputDto eventInputDto) {
         Event oldEvent = eventRepository.findById(eventId).orElseThrow(ObjectNotFoundException::new);
         Long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
         Event event = Event.builder()
@@ -247,7 +235,7 @@ public class EventServiceImpl implements EventService {
 
         eventRepository.save(event);
         long views = statisticsClient.getStatsForEvent(event.getId());
-        EventOutputShortDto eventOutputShortDto = EventMapper.eventOutputDtoShort(event, request, views);
+        EventOutputDto eventOutputShortDto = EventMapper.eventOutputDto(event, request, views);
         log.info("editing event by admin {} ", eventOutputShortDto);
         return eventOutputShortDto;
 
@@ -261,7 +249,8 @@ public class EventServiceImpl implements EventService {
         event.setState(State.CANCELED);
         eventRepository.save(event);
         long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
-        EventOutputDto eventOutputDto = EventMapper.eventOutputDto(event, request);
+        long views = statisticsClient.getStatsForEvent(event.getId());
+        EventOutputDto eventOutputDto = EventMapper.eventOutputDto(event, request, views);
         log.info("reject event {} ", eventOutputDto);
         return eventOutputDto;
     }
@@ -276,16 +265,16 @@ public class EventServiceImpl implements EventService {
         return PageRequest.of(page, size);
     }
 
-    private EventOutputShortDto getEventOutputDtoShort(Event event) {
+    private EventOutputDto getEventOutputDtoShort(Event event) {
         long requests = requestRepository.getCountConfirmedRequestByEventId(event.getId());
         long views = statisticsClient.getStatsForEvent(event.getId());
-        return EventMapper.eventOutputDtoShort(event, requests, views);
+        return EventMapper.eventOutputDto(event, requests, views);
     }
 
-    private EventOutputShortDto getFullOutputDto(Event event) {
+    private EventOutputDto getFullOutputDto(Event event) {
         long requests = requestRepository.getCountConfirmedRequestByEventId(event.getId());
         long views = statisticsClient.getStatsForEvent(event.getId());
-        return EventMapper.eventOutputDtoShort(event, requests, views);
+        return EventMapper.eventOutputDto(event, requests, views);
     }
 
     private Location getOrCreateLocation(EventInputDto eventInputDto) {

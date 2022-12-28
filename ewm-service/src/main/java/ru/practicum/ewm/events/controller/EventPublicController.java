@@ -2,18 +2,20 @@ package ru.practicum.ewm.events.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.events.model.dto.EventOutputDto;
 import ru.practicum.ewm.events.services.EventServiceImpl;
-import ru.practicum.ewm.events.model.dto.EventFullDto;
-import ru.practicum.ewm.events.model.dto.EventOutputShortDto;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-@RequiredArgsConstructor
+@Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "/events")
 public class EventPublicController {
 
@@ -21,7 +23,7 @@ public class EventPublicController {
 
 
     @GetMapping("/{id}")
-    public EventFullDto getPublishedEventById(@PathVariable Long id) {
+    public EventOutputDto getPublishedEventById(@PathVariable Long id) {
         return eventService.getPublishedEventById(id);
     }
 
@@ -40,16 +42,16 @@ public class EventPublicController {
      */
 
     @GetMapping()
-    public List<EventOutputShortDto> getEventsByLoc(HttpServletRequest request,
-                                                    @RequestParam(required = false) String text,
-                                                    @RequestParam(required = false) List<Long> categories,
-                                                    @RequestParam(required = false) Boolean paid,
-                                                    @RequestParam(required = false) String rangeStart,
-                                                    @RequestParam(required = false) String rangeEnd,
-                                                    @RequestParam(required = false) Boolean onlyAvailable,
-                                                    @RequestParam(required = false) String sort,
-                                                    @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-                                                    @RequestParam(defaultValue = "10") @Positive Integer size) {
+    public List<EventOutputDto> getEventsByLoc(HttpServletRequest request,
+                                               @Valid @RequestParam(required = false) String text,
+                                               @Valid @RequestParam(required = false) List<Long> categories,
+                                               @Valid @RequestParam(required = false) Boolean paid,
+                                               @Valid @RequestParam(required = false) String rangeStart,
+                                               @Valid @RequestParam(required = false) String rangeEnd,
+                                               @Valid @RequestParam(required = false) Boolean onlyAvailable,
+                                               @Valid @RequestParam(required = false) String sort,
+                                               @Valid @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                                               @Valid @RequestParam(defaultValue = "10") @Positive Integer size) {
         return eventService.searchEventsByUser(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
     }
 }

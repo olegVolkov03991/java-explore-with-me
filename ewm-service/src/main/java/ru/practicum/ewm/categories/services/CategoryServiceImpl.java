@@ -41,9 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (categoryRepository.findByName(categoryInputDto.getName()) != null) {
             throw new ConflictException("this name already exists");
         }
-        if (categoryInputDto.getId() == 0) {
-            categoryInputDto.setId(1L);
-        }
+
         Category category = categoryRepository.findById(categoryInputDto.getId())
                 .orElseThrow(ObjectNotFoundException::new);
         categoryRepository.deleteById(categoryInputDto.getId());

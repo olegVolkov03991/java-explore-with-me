@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.exceptions.BadReqestException;
 import ru.practicum.ewm.exceptions.ObjectNotFoundException;
-import ru.practicum.ewm.locations.model.*;
+import ru.practicum.ewm.locations.model.Location;
 import ru.practicum.ewm.locations.model.dto.LocationInputDto;
 import ru.practicum.ewm.locations.model.dto.LocationMapper;
 import ru.practicum.ewm.locations.model.dto.LocationOutputDto;

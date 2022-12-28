@@ -53,7 +53,7 @@ public class EventOutputDto {
 
     private State state;
 
-    //  private Long views;
+    private Long views;
 
     private LocationDto location;
 }

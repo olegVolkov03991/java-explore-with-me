@@ -1,34 +1,34 @@
 package ru.practicum.ewm.events.services;
 
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.practicum.ewm.events.model.*;
+import ru.practicum.ewm.events.model.State;
 import ru.practicum.ewm.events.model.dto.*;
 
 import java.util.List;
 
 public interface EventService {
-    EventOutputShortDto create(long userId, EventInputDto eventDto);
+    EventOutputDto create(long userId, EventInputDto eventDto);
 
-    EventOutputShortDto publishingEvent(long eventId);
+    EventOutputDto publishingEvent(long eventId);
 
-    EventOutputShortDto rejectionEvent(long eventId);
+    EventOutputDto rejectionEvent(long eventId);
 
-    EventOutputShortDto editingEventByAdmin(long eventId, EventInputDto eventInputDto);
+    EventOutputDto editingEventByAdmin(long eventId, EventInputDto eventInputDto);
 
-    EventFullDto getPublishedEventById(long id);
+    EventOutputDto getPublishedEventById(long id);
 
     EventOutputDto updateEventByUser(long userId, EventUpdateDto eventUpdateDto);
 
-    EventFullDto getEventByInitiator( Long userId, Long eventId);
+    EventOutputDto getEventByInitiator( Long userId, Long eventId);
 
 
-    List<EventOutputShortDto> getAllEventsByUserId(long id,
+    List<EventOutputDto> getAllEventsByUserId(long id,
                                                    Integer from,
                                                    Integer size);
 
 
 
-    List<EventOutputShortDto> getAllEvents(List<Long> users, List<State> states,
+    List<EventOutputDto> getAllEvents(List<Long> users, List<State> states,
                                            List<Long> categories,
                                            String rangeStart,
                                            String rangeEnd,
@@ -40,7 +40,7 @@ public interface EventService {
                                           @PathVariable Long eventId);
 
 
-    public List<EventOutputShortDto> searchEventsByUser(String text,
+    public List<EventOutputDto> searchEventsByUser(String text,
                                                         List<Long> categories,
                                                         Boolean paid,
                                                         String rangeStart,

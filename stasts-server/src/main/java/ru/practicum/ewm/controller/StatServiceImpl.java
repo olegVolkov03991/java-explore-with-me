@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -19,5 +22,14 @@ public class StatServiceImpl implements StatService {
         statRepository.saveAndFlush(endpointHit);
 
 
+    }
+
+    @Override
+    public List<ViewStats> getStats(String start, String end, List<String> uris, Boolean unique) {
+        if (unique) {
+            return statRepository.getViewWithUniqueIP(start, end, (uris == null ? Collections.emptyList() : uris));
+        } else {
+            return statRepository.getViewWithDuplicateIP(start, end, (uris == null ? Collections.emptyList() : uris));
+        }
     }
 }
