@@ -26,14 +26,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryOutputDto create(CategoryInputDto categoryInputDto) {
-        if (categoryRepository.findByName(categoryInputDto.getName()) != null) {
-            throw new ConflictException("this name already exists");
+        if(categoryRepository.findByName(categoryInputDto.getName()) != null){
+            throw new ConflictException("this name is already in use");
         }
         Category category = CategoryMapper.toCategory(categoryInputDto);
         categoryRepository.save(category);
-        CategoryOutputDto categoryOutputDto = CategoryMapper.toCategoryOutPutDto(category);
-        log.info("create {} ", categoryOutputDto);
-        return categoryOutputDto;
+        log.info("create {} ", categoryInputDto.getName());
+        return CategoryMapper.toCategoryOutputDto(category);
     }
 
     @Override
@@ -44,10 +43,9 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = categoryRepository.findById(categoryInputDto.getId())
                 .orElseThrow(ObjectNotFoundException::new);
-        categoryRepository.deleteById(categoryInputDto.getId());
-        category.setName(category.getName());
+        category.setName(categoryInputDto.getName());
         categoryRepository.save(category);
-        CategoryOutputDto categoryOutputDto = CategoryMapper.toCategoryOutPutDto(category);
+        CategoryOutputDto categoryOutputDto = CategoryMapper.toCategoryOutputDto(category);
         log.info("update category {} ", categoryOutputDto);
         return categoryOutputDto;
     }
@@ -71,7 +69,7 @@ public class CategoryServiceImpl implements CategoryService {
         } else if (id.size() == 1) {
             Category category = getCategory(id.get(0));
             log.info("get category {} ", category);
-            return List.of(CategoryMapper.toCategoryOutPutDto(category));
+            return List.of(CategoryMapper.toCategoryOutputDto(category));
         } else {
             categories = categoryRepository.getCategoriesByIdInOrderByIdAsc(id, getPageRequest(from, size));
             if (categories.isEmpty()) {
@@ -85,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         List<CategoryOutputDto> outputCategories = categories.stream()
-                .map(CategoryMapper::toCategoryOutPutDto)
+                .map(CategoryMapper::toCategoryOutputDto)
                 .collect(Collectors.toList());
         log.info("get all categories {} ", outputCategories);
         return outputCategories;
@@ -98,7 +96,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Category category = categoryRepository.findById(id)
                 .orElseThrow(ObjectNotFoundException::new);
-        CategoryOutputDto categoryOutputDto = CategoryMapper.toCategoryOutPutDto(category);
+        CategoryOutputDto categoryOutputDto = CategoryMapper.toCategoryOutputDto(category);
         log.info("get category {} ", categoryOutputDto);
         return categoryOutputDto;
     }
