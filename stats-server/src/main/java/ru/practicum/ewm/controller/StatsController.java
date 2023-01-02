@@ -3,6 +3,9 @@ package ru.practicum.ewm.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.model.EndpointHitDto;
+import ru.practicum.ewm.model.ViewStats;
+import ru.practicum.ewm.service.StatServiceImpl;
 
 import javax.validation.Valid;
 import java.util.List;
