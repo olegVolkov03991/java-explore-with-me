@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "statistics")
-//@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class EndpointHit {
 
     @Id
