@@ -2,16 +2,14 @@ version: '3.1'
 services:
   stats-server:
     build: ./stats-server
-    image: java-explore-with-me-stats-server
     container_name: stats-server
     ports:
       - "9090:9090"
     depends_on:
       - stats-db
     environment:
-      - STATS_DB_URL=jdbc:postgresql://stats-db:5432/stats-db
-      - DB_NAME=stats-db
-      - POSTGRES_USER=root
+      - STATS_DB_URL=jdbc:postgresql://stats-db:5433/stats-db
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
 
   stats-db:
@@ -21,16 +19,15 @@ services:
     volumes:
       - /var/lib/postgresql/data2/
     ports:
-      - "6542:5432"
-    command: -p 5432
+      - "6542:5433"
+    command: -p 5433
     environment:
       - POSTGRES_DB=stats-db
-      - POSTGRES_USER=root
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
 
   ewm-service:
     build: ./ewm-service
-    image: java-explore-with-me-ewm-service
     container_name: ewm-service
     depends_on:
       - stats-db
@@ -41,8 +38,7 @@ services:
     environment:
       - STATS_SERVER_URL=http://stats-server:9090
       - SERVICE_DB_URL=jdbc:postgresql://ewm-db:5432/ewm-db
-      - DB_NAME=ewm-db
-      - POSTGRES_USER=root
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
 
   ewm-db:
@@ -56,5 +52,5 @@ services:
     command: -p 5432
     environment:
       - POSTGRES_DB=ewm-db
-      - POSTGRES_USER=root
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
