@@ -8,7 +8,7 @@ services:
     depends_on:
       - stats-db
     environment:
-      - STATS_DB_URL=jdbc:postgresql://stats-db:5433/stats-db
+      - STATS_DB_URL=jdbc:postgresql://stats-db:5432/stats-db
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
 
@@ -19,8 +19,8 @@ services:
     volumes:
       - /var/lib/postgresql/data2/
     ports:
-      - "6342:5433"
-    command: -p 5433
+      - "5555:5432"
+    command: -p 5432
     environment:
       - POSTGRES_DB=stats-db
       - POSTGRES_USER=root
@@ -48,7 +48,7 @@ services:
     volumes:
       - /var/lib/postgresql/data/
     ports:
-      - "6541:5432"
+      - "7777:5432"
     command: -p 5432
     environment:
       - POSTGRES_DB=ewm-db
