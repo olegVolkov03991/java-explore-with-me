@@ -21,10 +21,10 @@ public class CategoryControllerPublic {
     private final CategoryServiceImpl categoryService;
 
     @GetMapping
-    public List<CategoryOutputDto> getAllById(@Valid @PathVariable(required = false) List<Long> categoryId,
+    public List<CategoryOutputDto> getAllById(@Valid @PathVariable(required = false) List<Long> ids,
                                               @Valid  @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                               @Valid  @RequestParam(defaultValue = "10") @Positive Integer size){
-        return categoryService.getAllById(categoryId, from, size);
+        return categoryService.getAllById(ids, from, size);
     }
 
     @GetMapping("/{id}")

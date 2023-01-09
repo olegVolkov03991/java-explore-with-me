@@ -240,6 +240,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventOutputDto rejectEventByInitiator(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);

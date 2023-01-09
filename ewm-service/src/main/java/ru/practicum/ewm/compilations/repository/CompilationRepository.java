@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 public interface CompilationRepository extends JpaRepository<Compilation, Long> {
 
     @Modifying
-    @Transactional
     @Query(nativeQuery = true,
             value = "insert into events_compilations (event_id, compilation_id) " +
                     "values (:eventId, :compId)")
@@ -21,7 +20,6 @@ public interface CompilationRepository extends JpaRepository<Compilation, Long> 
                               @Param("eventId") Long eventId);
 
     @Modifying
-    @Transactional
     @Query(nativeQuery = true,
             value = "delete from events_compilations " +
                     "where event_id = :eventId " +

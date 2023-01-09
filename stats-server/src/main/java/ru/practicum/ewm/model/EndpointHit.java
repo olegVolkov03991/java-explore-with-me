@@ -1,12 +1,10 @@
 package ru.practicum.ewm.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-import ru.practicum.ewm.model.Attributes;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -24,9 +22,6 @@ public class EndpointHit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @Column(name = "created", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 
     @Column(name = "uri", nullable = false)

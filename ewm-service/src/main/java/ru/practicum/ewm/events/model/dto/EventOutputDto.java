@@ -1,6 +1,5 @@
 package ru.practicum.ewm.events.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
@@ -11,11 +10,12 @@ import ru.practicum.ewm.user.model.dto.UserOutputDto;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
 public class EventOutputDto {
+
     private Long id;
 
     @NonNull
@@ -29,15 +29,12 @@ public class EventOutputDto {
 
     private Long confirmedRequests;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Future
-    private LocalDateTime eventDate;
+    private Date eventDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdOn;
+    private Date createdOn;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime publishedOn;
+    private Date publishedOn;
 
     private String description;
 

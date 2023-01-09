@@ -13,6 +13,7 @@ import ru.practicum.ewm.locations.model.dto.LocationOutputDto;
 import ru.practicum.ewm.locations.model.dto.LocationOutputDtoWithDistance;
 import ru.practicum.ewm.locations.repository.LocationRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
 
     @Override
+    @Transactional
     public LocationOutputDto addLocation(LocationInputDto locationInputDto) {
         if (locationRepository.findLocation(locationInputDto.getLat(), locationInputDto.getLon()).isPresent()) {
             throw new BadReqestException();

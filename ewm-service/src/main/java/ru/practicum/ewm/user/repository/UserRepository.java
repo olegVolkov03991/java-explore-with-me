@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @NonNull Page<User> findAll(@NonNull Pageable page);
 
-    Page<User> getUsersByIdIsInOrderByIdAsc(List<Long> id, Pageable pageable);
+    Page<User> getUsersByIdIsIn(List<Long> id, Pageable pageable);
 
-    User findByName(String name);
+    Boolean existsByName(String name);
 }

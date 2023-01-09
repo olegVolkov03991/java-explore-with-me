@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserOutputDto create(UserInputDto userInputDto) {
-        if (userRepository.findByName(userInputDto.getName()) != null) {
+        if (userRepository.existsByName(userInputDto.getName())) {
             throw new ConflictException("this name already exists");
         }
         log.info("<create USER> create user: name - {} ", userInputDto.getName());
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             return List.of(UserMapper.userOutputDto(user));
         }
         else {
-            users = userRepository.getUsersByIdIsInOrderByIdAsc(ids, getPageRequest(from, size));
+            users = userRepository.getUsersByIdIsIn(ids, getPageRequest(from, size));
             if (users.isEmpty()) {
                 log.warn("page users is empty");
                 throw new ObjectNotFoundException();

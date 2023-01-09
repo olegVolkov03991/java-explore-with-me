@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CategoryService {
 
-    List<CategoryOutputDto> getAllById(List<Long> id,
+    List<CategoryOutputDto> getAllById(List<Long> ids,
                                        Integer from,
                                        Integer size);
 

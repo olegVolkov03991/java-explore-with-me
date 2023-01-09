@@ -10,8 +10,8 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 
-    Page<Category> getCategoriesByIdInOrderByIdAsc(List<Long> id,
+    Page<Category> getCategoriesByIdIn(List<Long> id,
                                                    Pageable pageable);
 
-    Category findByName(String name);
+    boolean existsByName(String name);
 }

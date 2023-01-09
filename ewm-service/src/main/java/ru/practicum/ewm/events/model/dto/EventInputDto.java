@@ -1,6 +1,5 @@
 package ru.practicum.ewm.events.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.ewm.events.model.State;
@@ -11,11 +10,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
 public class EventInputDto {
+
 
     @NotNull
     private String title;
@@ -37,15 +37,12 @@ public class EventInputDto {
 
     private Location location;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Future
-    private LocalDateTime eventDate;
+    private Date eventDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdOn;
+    private Date createdOn;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime publishedOn;
+    private Date publishedOn;
 
     @Builder.Default
     private Boolean requestModeration = true;

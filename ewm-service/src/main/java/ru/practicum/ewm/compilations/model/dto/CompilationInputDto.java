@@ -18,5 +18,5 @@ public class CompilationInputDto {
 
     private Boolean pinned;
 
-    Set<Long> events;
+    private Set<Long> events;
 }

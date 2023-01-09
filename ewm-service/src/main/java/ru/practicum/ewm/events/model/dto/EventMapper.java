@@ -9,8 +9,10 @@ import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.model.dto.UserMapper;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class EventMapper {
+    static Date date = new Date();
     public static Event toEvent(EventInputDto eventInputDto,
                                 Category category,
                                 User initiator,
@@ -24,8 +26,8 @@ public class EventMapper {
                 .paid(eventInputDto.getPaid())
                 .participantLimit(eventInputDto.getParticipantLimit())
                 .title(eventInputDto.getTitle())
-                .publishedOn(LocalDateTime.now())
-                .createdOn(LocalDateTime.now())
+                .publishedOn(date)
+                .createdOn(date)
                 .requestModeration(eventInputDto.getRequestModeration())
                 .state(State.PENDING)
                 .location(location)

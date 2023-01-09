@@ -15,6 +15,7 @@ import ru.practicum.ewm.requests.repository.RequestRepository;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class RequestServiceImpl implements RequestService {
     private final EventRepository eventRepository;
 
     @Override
+    @Transactional
     public RequestOutputDto create(long requestorId, Long eventId) {
         if (eventId == 0) {
             eventId = 1L;
@@ -54,9 +56,9 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestOutputDto> getRequestByInitiator(Long userId, Long eventId) {
-        Event event = eventRepository.findById(eventId)
+        eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(ObjectNotFoundException::new);
         return requestRepository.findRequestByEventId(eventId)
                 .stream()
@@ -65,6 +67,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional
     public RequestOutputDto CancelYourEventRequest(Long userId, Long requestId) {
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(ObjectNotFoundException::new);
@@ -74,33 +77,35 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional
     public RequestOutputDto RejectionApplicationByUserEvent(Long userId, Long eventId, Long reqId) {
         Request request = requestRepository.findById(reqId)
                 .orElseThrow(ObjectNotFoundException::new);
 
         request.setStatus(Status.REJECTED);
 
-        return  RequestMapper.toRequestDto(requestRepository.save(request));
+        return RequestMapper.toRequestDto(requestRepository.save(request));
     }
 
     @Override
+    @Transactional
     public RequestOutputDto ConfirmationApplicationByUserEvent(Long userId, Long eventId, Long reqId) {
         Request request = requestRepository.findById(reqId)
                 .orElseThrow(ObjectNotFoundException::new);
 
         request.setStatus(Status.CONFIRMED);
 
-        return  RequestMapper.toRequestDto(requestRepository.save(request));
+        return RequestMapper.toRequestDto(requestRepository.save(request));
     }
 
     @Override
     public List<RequestOutputDto> getInformationAboutUserApplicationsForParticipationInOtherEvents(Long userId) {
-       List<Request> requests = requestRepository.getRequestByRequester(userId);
-       log.info("get request bu user id {} " , requests);
+        List<Request> requests = requestRepository.getRequestByRequester(userId);
+        log.info("get request bu user id {} ", requests);
 
-       return requests.stream()
-               .map(RequestMapper::toRequestDto)
-               .collect(Collectors.toList());
+        return requests.stream()
+                .map(RequestMapper::toRequestDto)
+                .collect(Collectors.toList());
 
 
     }

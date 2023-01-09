@@ -14,6 +14,7 @@ import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.events.repository.EventRepository;
 import ru.practicum.ewm.exceptions.ObjectNotFoundException;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class CompilationServiceImpl implements CompilationService {
 
 
     @Override
+    @Transactional
     public CompilationOutputDto create(CompilationInputDto compilationInputDto) {
         Set<Event> events = compilationInputDto.getEvents()
                 .stream()
@@ -64,22 +66,26 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public void addEventToCompilation(long compId, long eventId) {
         compilationsRepository.addEventToCompilation(compId, eventId);
     }
 
     @Override
+    @Transactional
     public void deleteEventInCompilation(long compId, long eventId) {
         compilationsRepository.deleteEventToCompilation(compId, eventId);
 
     }
 
     @Override
+    @Transactional
     public void deleteCompilation(long compId) {
         compilationsRepository.deleteById(compId);
     }
 
     @Override
+    @Transactional
     public void pinCompilation(long compId) {
         Compilation compilation = compilationsRepository.findById(compId)
                 .orElseThrow(ObjectNotFoundException::new);
@@ -88,6 +94,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public void unpinCompilation(long compId) {
         Compilation compilation = compilationsRepository.findById(compId)
                 .orElseThrow(ObjectNotFoundException::new);
