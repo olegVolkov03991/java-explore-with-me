@@ -9,9 +9,11 @@ import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.categories.repository.CategoryRepository;
 import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.events.model.State;
-import ru.practicum.ewm.events.model.dto.*;
+import ru.practicum.ewm.events.model.dto.EventInputDto;
+import ru.practicum.ewm.events.model.dto.EventMapper;
+import ru.practicum.ewm.events.model.dto.EventOutputDto;
+import ru.practicum.ewm.events.model.dto.EventUpdateDto;
 import ru.practicum.ewm.events.repository.EventRepository;
-import ru.practicum.ewm.exceptions.BadReqestException;
 import ru.practicum.ewm.exceptions.ObjectNotFoundException;
 import ru.practicum.ewm.locations.model.Location;
 import ru.practicum.ewm.locations.repository.LocationRepository;
@@ -21,7 +23,6 @@ import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -139,7 +140,7 @@ public class EventServiceImpl implements EventService {
     public EventOutputDto getEventByInitiator(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
-        if(!event.getInitiator().getId().equals(userId)){
+        if (!event.getInitiator().getId().equals(userId)) {
             log.error("this user id not found");
         }
         long request = requestRepository.getCountConfirmedRequestByEventId(eventId);
@@ -155,12 +156,12 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventOutputDto> getAllEvents(List<Long> users,
-                                                  List<State> states,
-                                                  List<Long> categories,
-                                                  String rangeStart,
-                                                  String rangeEnd,
-                                                  Integer from,
-                                                  Integer size) {
+                                             List<State> states,
+                                             List<Long> categories,
+                                             String rangeStart,
+                                             String rangeEnd,
+                                             Integer from,
+                                             Integer size) {
         List<Event> events = eventRepository.searchEvents(users,
                         states,
                         categories,
@@ -180,14 +181,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventOutputDto> searchEventsByUser(String text,
-                                                        List<Long> categories,
-                                                        Boolean paid,
-                                                        String rangeStart,
-                                                        String rangeEnd,
-                                                        Boolean onlyAvailable,
-                                                        String sort,
-                                                        Integer from,
-                                                        Integer size) {
+                                                   List<Long> categories,
+                                                   Boolean paid,
+                                                   String rangeStart,
+                                                   String rangeEnd,
+                                                   Boolean onlyAvailable,
+                                                   String sort,
+                                                   Integer from,
+                                                   Integer size) {
         List<EventOutputDto> events = eventRepository.getEvents(text,
                         categories,
                         paid,
@@ -240,7 +241,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional
     public EventOutputDto rejectEventByInitiator(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(ObjectNotFoundException::new);
