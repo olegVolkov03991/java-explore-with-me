@@ -16,6 +16,7 @@ import ru.practicum.ewm.user.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,9 +47,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void remove(long id) {
-        log.info("<remove> delete user {} ", id);
         userRepository.deleteById(id);
     }
+
 
 
     @Override
@@ -56,25 +57,10 @@ public class UserServiceImpl implements UserService {
         Page<User> users;
         if (ids == null || ids.isEmpty()) {
             users = userRepository.findAll(getPageRequest(from, size));
-            log.info("<getUsers> get all users {} ", users);
-        }
-        else if (ids.size() == 1) {
-            User user = userRepository.findById(ids.get(0))
-                    .orElseThrow(ObjectNotFoundException::new);
-            log.info("<getUser> get user: name - {} ", user.getName());
-            return List.of(UserMapper.userOutputDto(user));
-        }
-        else {
+        } else {
             users = userRepository.getUsersByIdIsIn(ids, getPageRequest(from, size));
             if (users.isEmpty()) {
-                log.warn("page users is empty");
                 throw new ObjectNotFoundException();
-            }
-            users.stream()
-                    .forEach(user -> ids
-                            .remove(user.getId()));
-            if (!ids.isEmpty()) {
-                log.warn("Users with id={} were not found", ids);
             }
         }
         return users.stream()

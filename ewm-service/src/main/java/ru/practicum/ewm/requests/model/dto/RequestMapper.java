@@ -1,7 +1,9 @@
 package ru.practicum.ewm.requests.model.dto;
 
+import org.springframework.stereotype.Component;
 import ru.practicum.ewm.requests.model.Request;
 
+@Component
 public class RequestMapper {
 
 
