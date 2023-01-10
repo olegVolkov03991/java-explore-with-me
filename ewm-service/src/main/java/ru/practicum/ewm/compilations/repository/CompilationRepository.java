@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.practicum.ewm.compilations.model.Compilation;
 
-import javax.transaction.Transactional;
-
 public interface CompilationRepository extends JpaRepository<Compilation, Long> {
 
     @Modifying
