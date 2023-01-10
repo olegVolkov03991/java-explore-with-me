@@ -7,7 +7,7 @@
   "servers": [
     {
       "description": "Generated server url",
-      "url": "http://localhost:5432"
+      "url": "http://localhost:8080"
     }
   ],
   "tags": [
