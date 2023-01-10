@@ -12,7 +12,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static UserOutputDto userOutputDto(User user){
+    public static UserOutputDto userOutputDto(User user) {
         return UserOutputDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())

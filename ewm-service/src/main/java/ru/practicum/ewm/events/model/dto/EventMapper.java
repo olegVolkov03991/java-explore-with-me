@@ -9,12 +9,13 @@ import ru.practicum.ewm.locations.model.dto.LocationMapper;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.model.dto.UserMapper;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
 public class EventMapper {
+
     static Date date = new Date();
+
     public static Event toEvent(EventInputDto eventInputDto,
                                 Category category,
                                 User initiator,

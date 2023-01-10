@@ -9,7 +9,7 @@ import java.util.Set;
 @Component
 public class CompilationMapper {
 
-    public static Compilation toCompilations(CompilationInputDto compilationsInputDto, Set<Event> events){
+    public static Compilation toCompilations(CompilationInputDto compilationsInputDto, Set<Event> events) {
         return Compilation.builder()
                 .title(compilationsInputDto.getTitle())
                 .pinned(compilationsInputDto.getPinned())
@@ -18,7 +18,7 @@ public class CompilationMapper {
                 .build();
     }
 
-    public static CompilationOutputDto compilationsOutputDtoShort(Compilation compilations){
+    public static CompilationOutputDto compilationsOutputDtoShort(Compilation compilations) {
         return CompilationOutputDto.builder()
                 .id(compilations.getId())
                 .pinned(compilations.getPinned())
@@ -27,7 +27,7 @@ public class CompilationMapper {
                 .build();
     }
 
-    public static CompilationOutputDto toCompilationsOutputDto(Compilation compilation, Set<Event> events){
+    public static CompilationOutputDto toCompilationsOutputDto(Compilation compilation, Set<Event> events) {
         return CompilationOutputDto.builder()
                 .id(compilation.getId())
                 .events(events)

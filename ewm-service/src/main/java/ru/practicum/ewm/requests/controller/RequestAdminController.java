@@ -27,16 +27,16 @@ public class RequestAdminController {
 
 
     @PatchMapping("/{eventId}/requests/{reqId}/reject")
-    public RequestOutputDto RejectionApplicationByUserEvent(@Valid @PathVariable Long userId,
+    public RequestOutputDto rejectionApplicationByUserEvent(@Valid @PathVariable Long userId,
                                                             @Valid  @PathVariable Long eventId,
                                                             @Valid   @PathVariable Long reqId) {
-        return requestService.RejectionApplicationByUserEvent(userId, eventId, reqId);
+        return requestService.rejectionApplicationByUserEvent(userId, eventId, reqId);
     }
 
     @PatchMapping("/{eventId}/requests/{reqId}/confirm")
-    public RequestOutputDto ConfirmationApplicationByUserEvent(@Valid @PathVariable Long userId,
+    public RequestOutputDto confirmationApplicationByUserEvent(@Valid @PathVariable Long userId,
                                                                @Valid   @PathVariable Long eventId,
                                                                @Valid    @PathVariable Long reqId) {
-        return requestService.ConfirmationApplicationByUserEvent(userId, eventId, reqId);
+        return requestService.confirmationApplicationByUserEvent(userId, eventId, reqId);
     }
 }

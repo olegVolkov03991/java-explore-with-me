@@ -25,8 +25,8 @@ public class RequestController {
 
 
     @PatchMapping("/{requestId}/cancel")
-    public RequestOutputDto CancelYourEventRequest(@Valid @PathVariable Long userId, @Valid @PathVariable Long requestId) {
-        return requestService.CancelYourEventRequest(userId, requestId);
+    public RequestOutputDto cancelYourEventRequest(@Valid @PathVariable Long userId, @Valid @PathVariable Long requestId) {
+        return requestService.cancelYourEventRequest(userId, requestId);
     }
 
 

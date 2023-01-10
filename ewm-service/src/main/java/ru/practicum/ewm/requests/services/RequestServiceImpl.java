@@ -68,7 +68,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     @Transactional
-    public RequestOutputDto CancelYourEventRequest(Long userId, Long requestId) {
+    public RequestOutputDto cancelYourEventRequest(Long userId, Long requestId) {
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(ObjectNotFoundException::new);
         request.setStatus(Status.CANCELED);
@@ -78,7 +78,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     @Transactional
-    public RequestOutputDto RejectionApplicationByUserEvent(Long userId, Long eventId, Long reqId) {
+    public RequestOutputDto rejectionApplicationByUserEvent(Long userId, Long eventId, Long reqId) {
         Request request = requestRepository.findById(reqId)
                 .orElseThrow(ObjectNotFoundException::new);
 
@@ -89,7 +89,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     @Transactional
-    public RequestOutputDto ConfirmationApplicationByUserEvent(Long userId, Long eventId, Long reqId) {
+    public RequestOutputDto confirmationApplicationByUserEvent(Long userId, Long eventId, Long reqId) {
         Request request = requestRepository.findById(reqId)
                 .orElseThrow(ObjectNotFoundException::new);
 

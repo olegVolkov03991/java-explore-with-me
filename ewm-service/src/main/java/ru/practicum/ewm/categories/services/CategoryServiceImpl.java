@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryOutputDto create(CategoryInputDto categoryInputDto) {
-        if(categoryRepository.existsByName(categoryInputDto.getName())){
+        if (categoryRepository.existsByName(categoryInputDto.getName())) {
             throw new ConflictException("this name already exists");
         }
         Category category = CategoryMapper.toCategory(categoryInputDto);

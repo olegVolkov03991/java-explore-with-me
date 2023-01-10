@@ -23,12 +23,12 @@ public class CategoryControllerPublic {
     @GetMapping
     public List<CategoryOutputDto> getAllById(@Valid @PathVariable(required = false) List<Long> ids,
                                               @Valid  @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-                                              @Valid  @RequestParam(defaultValue = "10") @Positive Integer size){
+                                              @Valid  @RequestParam(defaultValue = "10") @Positive Integer size) {
         return categoryService.getAllById(ids, from, size);
     }
 
     @GetMapping("/{id}")
-    public CategoryOutputDto getById(@Valid @PathVariable long id){
+    public CategoryOutputDto getById(@Valid @PathVariable long id) {
         return categoryService.getById(id);
     }
 }
