@@ -3,7 +3,7 @@ services:
   ewm-service:
     build: ./ewm-service
     container_name: ewm-service
- #   restart: always
+    restart: always
     depends_on:
       - stats-db
       - ewm-db
