@@ -9,7 +9,7 @@ services:
       - ewm-db
       - stats-server
     ports:
-      - "8080:8080"
+      - "7070:7070"
     environment:
       - STATS_SERVER_URL=http://stats-server:9090
       - SERVICE_DB_URL=jdbc:postgresql://ewm-db:5432/ewm-db
