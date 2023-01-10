@@ -30,6 +30,8 @@ public class UserController {
         userService.remove(userId);
     }
 
+
+
     @GetMapping
     public List<UserOutputDto> getByIds(@Valid @RequestParam(required = false) List<Long> ids,
                                         @Valid @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
