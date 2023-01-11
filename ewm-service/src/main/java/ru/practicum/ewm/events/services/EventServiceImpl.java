@@ -57,7 +57,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventOutputDto getPublishedEventById(long id) {
+    public EventOutputDto getPublishedEventById(Long id) {
         eventRepository.findById(id)
                 .orElseThrow(ObjectNotFoundException::new);
         Event event = eventRepository.getById(id);

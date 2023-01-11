@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.model.dto.EventOutputDto;
 import ru.practicum.ewm.events.services.EventServiceImpl;
+import ru.practicum.ewm.statistics.aop.CreatingHit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,7 +24,9 @@ public class EventPublicController {
 
 
     @GetMapping("/{id}")
-    public EventOutputDto getPublishedEventById(@PathVariable Long id) {
+    @CreatingHit
+    public EventOutputDto getPublishedEventById(HttpServletRequest request,
+                                                @PathVariable Long id) {
         return eventService.getPublishedEventById(id);
     }
 
@@ -41,6 +44,7 @@ public class EventPublicController {
      */
 
     @GetMapping()
+    @CreatingHit
     public List<EventOutputDto> getEventsByLoc(HttpServletRequest request,
                                                @Valid @RequestParam(required = false) String text,
                                                @Valid @RequestParam(required = false) List<Long> categories,

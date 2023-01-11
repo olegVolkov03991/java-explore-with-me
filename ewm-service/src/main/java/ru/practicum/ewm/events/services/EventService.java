@@ -18,7 +18,7 @@ public interface EventService {
 
     EventOutputDto create(long userId, EventInputDto eventDto);
 
-    EventOutputDto getPublishedEventById(long id);
+    EventOutputDto getPublishedEventById(Long id);
 
     EventOutputDto publishingEvent(long eventId);
 
