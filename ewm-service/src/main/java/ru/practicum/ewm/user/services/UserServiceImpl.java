@@ -60,9 +60,6 @@ public class UserServiceImpl implements UserService {
             users = userRepository.findAll(getPageRequest(from, size));
         } else {
             users = userRepository.getUsersByIdIsIn(ids, getPageRequest(from, size));
-            if (users.isEmpty()) {
-                return null;
-            }
         }
         return users.stream()
                 .map(UserMapper::userOutputDto)
