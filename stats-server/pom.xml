@@ -7,14 +7,11 @@
         <artifactId>explore-with-me</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.example</groupId>
+
     <artifactId>stats-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>stats-server</name>
-    <description>stats-server</description>
-    <properties>
-        <java.version>11</java.version>
-    </properties>
+
+    <name>ExploreWithMe Stats Server</name>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
