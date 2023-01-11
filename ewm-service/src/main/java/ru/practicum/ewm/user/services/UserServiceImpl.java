@@ -46,6 +46,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void remove(long id) {
+        userRepository.findById(id)
+                .orElseThrow(ObjectNotFoundException::new);
         userRepository.deleteById(id);
     }
 
@@ -59,7 +61,6 @@ public class UserServiceImpl implements UserService {
         } else {
             users = userRepository.getUsersByIdIsIn(ids, getPageRequest(from, size));
             if (users.isEmpty()) {
-                throw new ObjectNotFoundException();
             }
         }
         return users.stream()
