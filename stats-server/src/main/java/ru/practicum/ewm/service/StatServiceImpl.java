@@ -3,11 +3,11 @@ package ru.practicum.ewm.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewm.model.ViewStats;
-import ru.practicum.ewm.repository.StatRepository;
 import ru.practicum.ewm.model.EndpointHit;
 import ru.practicum.ewm.model.EndpointHitDto;
 import ru.practicum.ewm.model.StatMapper;
+import ru.practicum.ewm.model.ViewStats;
+import ru.practicum.ewm.repository.StatRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,10 +23,7 @@ public class StatServiceImpl implements StatService {
     @Override
     public void addHit(EndpointHitDto endpointHitDto) {
         EndpointHit endpointHit = StatMapper.toEndpointHit(endpointHitDto);
-
         statRepository.saveAndFlush(endpointHit);
-
-
     }
 
     @Override

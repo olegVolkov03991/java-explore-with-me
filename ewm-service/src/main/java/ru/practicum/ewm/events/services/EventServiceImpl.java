@@ -18,7 +18,7 @@ import ru.practicum.ewm.exceptions.ObjectNotFoundException;
 import ru.practicum.ewm.locations.model.Location;
 import ru.practicum.ewm.locations.repository.LocationRepository;
 import ru.practicum.ewm.requests.repository.RequestRepository;
-import ru.practicum.ewm.statistics.services.StatisticsClient;
+import ru.practicum.ewm.statistics.client.StatisticsClient;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
@@ -204,8 +204,6 @@ public class EventServiceImpl implements EventService {
                     .filter(e -> e.getParticipantLimit() > requestRepository.getCountConfirmedRequestByEventId(e.getId()))
                     .collect(Collectors.toList());
         }
-
-
         return events;
     }
 
