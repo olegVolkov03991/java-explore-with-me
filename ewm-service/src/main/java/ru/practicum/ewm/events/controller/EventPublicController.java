@@ -57,4 +57,13 @@ public class EventPublicController {
                                                @Valid @RequestParam(defaultValue = "10") @Positive Integer size) {
         return eventService.searchEventsByUser(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
     }
+
+    @GetMapping("/loc")
+    @CreatingHit
+    public List<EventOutputDto> getEventsByLoc(HttpServletRequest request,
+                                                    @RequestParam Double lat,
+                                                    @RequestParam Double lon,
+                                                    @RequestParam Double distance) {
+        return eventService.getEventsByLoc(lat, lon, distance);
+    }
 }

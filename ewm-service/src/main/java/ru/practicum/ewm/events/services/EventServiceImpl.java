@@ -68,6 +68,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<EventOutputDto> getEventsByLoc(Double lat, Double lon, Double distance) {
+        List<Location> locations = locationRepository.getLocations(lat, lon, distance);
+        return eventRepository.searchEventsInLoc(locations).stream()
+                .map(this::getEventOutputDtoShort)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<EventOutputDto> getAllEventsByUserId(long userId, Integer from, Integer size) {
         return eventRepository.getEventsByInitiatorIdOrderByIdAsc(userId, getPageRequest(from, size))
                 .stream()

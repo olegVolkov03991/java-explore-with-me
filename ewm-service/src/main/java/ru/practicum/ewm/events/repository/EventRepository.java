@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.events.model.State;
+import ru.practicum.ewm.locations.model.Location;
 
 import java.util.List;
 
@@ -45,6 +46,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                           @Param("rangeStart") String rangeStart,
                           @Param("rangeEnd") String rangeEnd,
                           Pageable page);
+
+    @Query("select e from Event e " +
+            "where (e.location in ?1) " +
+            "and (e.state = 'PUBLISHED')")
+    List<Event> searchEventsInLoc(List<Location> locations);
 }
 
 

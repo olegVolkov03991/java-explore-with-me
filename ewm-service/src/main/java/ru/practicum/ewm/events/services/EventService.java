@@ -12,6 +12,8 @@ public interface EventService {
 
     EventOutputDto editingEventByAdmin(long eventId, EventInputDto eventInputDto);
 
+    List<EventOutputDto> getEventsByLoc(Double lat, Double lon, Double distance);
+
     EventOutputDto updateEventByUser(long userId, EventUpdateDto eventUpdateDto);
 
     EventOutputDto getEventByInitiator(Long userId, Long eventId);
