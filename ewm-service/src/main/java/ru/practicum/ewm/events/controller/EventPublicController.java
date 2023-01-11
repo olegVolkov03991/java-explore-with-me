@@ -30,19 +30,6 @@ public class EventPublicController {
         return eventService.getPublishedEventById(id);
     }
 
-    /**
-     *
-     * @param text          - текст для поиска в содержимом аннотации и подробном описании события
-     * @param categories    - список идентификаторов категорий в которых будет вестись поиск
-     * @param paid          - поиск только платных/бесплатных событий
-     * @param rangeStart    - дата и время не раньше которых должно произойти событие
-     * @param rangeEnd      - дата и время не позже которых должно произойти событие
-     * @param onlyAvailable - только события у которых не исчерпан лимит запросов на участие
-     * @param sort          - Вариант сортировки: по дате события или по количеству просмотров
-     * @param from          - количество событий, которые нужно пропустить для формирования текущего набора
-     * @param size          - количество событий в наборе
-     */
-
     @GetMapping()
     @CreatingHit
     public List<EventOutputDto> getEventsByLoc(HttpServletRequest request,
