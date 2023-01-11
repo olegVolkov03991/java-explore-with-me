@@ -22,6 +22,8 @@ public class EndpointHit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "created", nullable = false)
     private LocalDateTime timestamp;
 
     @Column(name = "uri", nullable = false)

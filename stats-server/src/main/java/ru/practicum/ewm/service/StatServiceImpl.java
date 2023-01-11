@@ -23,7 +23,9 @@ public class StatServiceImpl implements StatService {
     @Override
     public void addHit(EndpointHitDto endpointHitDto) {
         EndpointHit endpointHit = StatMapper.toEndpointHit(endpointHitDto);
-        statRepository.saveAndFlush(endpointHit);
+        EndpointHit result = statRepository.save(endpointHit);
+        log.info("Add hit at uri={} from ip={} and app={}.",
+                result.getUri(), result.getAttributes().getIp(), result.getAttributes().getApp());
     }
 
     @Override
