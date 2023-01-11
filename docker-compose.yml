@@ -3,7 +3,6 @@ services:
   ewm-service:
     build: ./ewm-service
     container_name: ewm-service
-    restart: always
     depends_on:
       - stats-db
       - ewm-db
@@ -12,7 +11,7 @@ services:
       - "8080:8080"
     environment:
       - STATS_SERVER_URL=http://stats-server:9090
-      - SERVICE_DB_URL=jdbc:postgresql://ewm-db:5432/ewm-db
+      - SERVICE_DB_URL=jdbc:postgresql://localhost:5432/ewm-db
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
 
