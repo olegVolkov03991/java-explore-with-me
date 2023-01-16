@@ -21,7 +21,7 @@ public class StatisticsClient extends BaseClient {
 
     @Autowired
 //    public StatisticsClient(@Value("${STATS_SERVER_URL}") String serverUrl, RestTemplateBuilder builder) {
-    public StatisticsClient(@Value("http://localhost:9090") String serverUrl, RestTemplateBuilder builder) {
+    public StatisticsClient(@Value("${STATS_SERVER_URL}") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
