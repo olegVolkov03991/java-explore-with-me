@@ -15,5 +15,4 @@ public interface CommentService {
     List<CommentOutputDto> getAllComments();
 
     void deleteComment(Long id);
-
 }
