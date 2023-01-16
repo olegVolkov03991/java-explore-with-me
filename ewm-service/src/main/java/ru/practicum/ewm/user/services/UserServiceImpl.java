@@ -35,10 +35,10 @@ public class UserServiceImpl implements UserService {
             throw new ConflictException("this name already exists");
         }
         log.info("<create USER> create user: name - {} ", userInputDto.getName());
-
-        return UserMapper.userOutputDto(
-                userRepository.save(
-                        UserMapper.toUser(userInputDto)));
+        User user = UserMapper.toUser(userInputDto);
+        user.setBanUser(false);
+        userRepository.save(user);
+        return UserMapper.userOutputDto(user);
     }
 
 
@@ -64,6 +64,26 @@ public class UserServiceImpl implements UserService {
         return users.stream()
                 .map(UserMapper::userOutputDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void userBan(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(ObjectNotFoundException::new);
+        user.setBanUser(true);
+        log.info("user {}" , user.getName() +  " banned");
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void userUnban(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(ObjectNotFoundException::new);
+        user.setBanUser(false);
+        log.info("user {}" , user.getName() +  " unBanned");
+        userRepository.save(user);
     }
 
     private PageRequest getPageRequest(Integer from, Integer size) {

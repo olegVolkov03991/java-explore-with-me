@@ -36,4 +36,14 @@ public class UserController {
                                         @Valid @RequestParam(defaultValue = "10") @Positive Integer size) {
         return userService.getUsers(ids, from, size);
     }
+
+    @PatchMapping("/{userId}")
+    public void userBan(@PathVariable Long userId){
+        userService.userBan(userId);
+    }
+
+    @PatchMapping("/{userId}/unban")
+    public void userUnban(@PathVariable Long userId) {
+        userService.userUnban(userId);
+    }
 }

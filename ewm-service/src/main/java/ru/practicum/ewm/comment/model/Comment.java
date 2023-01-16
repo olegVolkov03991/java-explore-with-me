@@ -1,5 +1,6 @@
 package ru.practicum.ewm.comment.model;
 
+import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.user.model.User;
 
 
@@ -31,4 +32,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "initiator_id", referencedColumnName = "id")
     private User initiator;
+
+    @ManyToOne
+    private Event event;
 }

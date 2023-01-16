@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.ewm.categories.model.Category;
+import ru.practicum.ewm.comment.model.Comment;
 import ru.practicum.ewm.events.CustomDateDeserializer;
 import ru.practicum.ewm.locations.model.Location;
 import ru.practicum.ewm.user.model.User;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -77,5 +79,6 @@ public class Event {
     @ManyToOne()
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
+
 
 }
