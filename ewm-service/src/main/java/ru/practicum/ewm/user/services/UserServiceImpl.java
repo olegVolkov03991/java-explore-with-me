@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
 
-
     @Override
     @Transactional
     public UserOutputDto create(UserInputDto userInputDto) {
@@ -42,7 +41,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     @Transactional
     public void remove(long id) {
@@ -50,7 +48,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(ObjectNotFoundException::new);
         userRepository.deleteById(id);
     }
-
 
 
     @Override
@@ -72,7 +69,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(ObjectNotFoundException::new);
         user.setBanUser(true);
-        log.info("user {}" , user.getName() +  " banned");
+        log.info("user {}", user.getName() + " banned");
         userRepository.save(user);
     }
 
@@ -82,7 +79,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(ObjectNotFoundException::new);
         user.setBanUser(false);
-        log.info("user {}" , user.getName() +  " unBanned");
+        log.info("user {}", user.getName() + " unBanned");
         userRepository.save(user);
     }
 

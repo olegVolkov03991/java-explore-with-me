@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public void userBan(@PathVariable Long userId){
+    public void userBan(@PathVariable Long userId) {
         userService.userBan(userId);
     }
 

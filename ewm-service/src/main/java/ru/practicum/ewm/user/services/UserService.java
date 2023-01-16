@@ -10,9 +10,9 @@ public interface UserService {
 
     UserOutputDto create(UserInputDto userInputDto);
 
-    void userBan(Long userId);
-
     void userUnban(Long userId);
+
+    void userBan(Long userId);
 
     void remove(long id);
 }

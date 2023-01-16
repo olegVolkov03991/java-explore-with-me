@@ -1,4 +1,4 @@
-package ru.practicum.ewm.comment;
+package ru.practicum.ewm.comment.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ewm.comment.model.Comment;
 import ru.practicum.ewm.comment.model.dto.CommentMapper;
 import ru.practicum.ewm.comment.model.dto.CommentOutputDto;
+import ru.practicum.ewm.comment.repository.CommentRepository;
 import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.events.repository.EventRepository;
 import ru.practicum.ewm.exceptions.ObjectNotFoundException;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,9 +30,9 @@ public class CommentServiceImpl implements CommentService {
     private final EventRepository eventRepository;
 
     @Override
+    @Transactional
     public CommentOutputDto createComment(String text, Long eventId, Long userId) throws Exception {
-        User user = userRepository.findById(userId)
-                .orElseThrow(ObjectNotFoundException::new);
+        User user = findUserById(userId);
         if(user.getBanUser()){
             throw new Exception("\n" +
                     "This user has been banned and cannot post comments.");
@@ -44,9 +46,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public void deleteComment(Long id) {
-        userRepository.findById(id)
-                .orElseThrow(ObjectNotFoundException::new);
+        findCommentById(id);
         commentRepository.deleteById(id);
         log.info("comment delete");
     }
@@ -60,18 +62,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentOutputDto getCommentById(Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(ObjectNotFoundException::new);
+        Comment comment = findCommentById(commentId);
         log.info("get {}", comment.getText());
         return CommentMapper.toCommentOutputDto(comment);
     }
 
     @Override
+    @Transactional
     public CommentOutputDto updateComment(String updateText, Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(ObjectNotFoundException::new);
+        Comment comment = findCommentById(commentId);
         comment.setText(updateText);
-        commentRepository.save(comment);
+        commentRepository.saveAndFlush(comment);
         log.info("update {}", comment.getText());
         return CommentMapper.toCommentOutputDto(comment);
     }
@@ -79,5 +80,15 @@ public class CommentServiceImpl implements CommentService {
 
     public CommentOutputDto getCommentOutputDto(Comment comment) {
         return CommentMapper.toCommentOutputDto(comment);
+    }
+
+    public User findUserById(Long userId){
+       return userRepository.findById(userId)
+                .orElseThrow(ObjectNotFoundException::new);
+    }
+
+    public Comment findCommentById(Long commentId){
+        return commentRepository.findById(commentId)
+                .orElseThrow(ObjectNotFoundException::new);
     }
 }

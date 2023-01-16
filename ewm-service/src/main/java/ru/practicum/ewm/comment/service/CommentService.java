@@ -1,4 +1,4 @@
-package ru.practicum.ewm.comment;
+package ru.practicum.ewm.comment.service;
 
 import ru.practicum.ewm.comment.model.dto.CommentOutputDto;
 
@@ -8,13 +8,11 @@ public interface CommentService {
 
     CommentOutputDto createComment(String text, Long eventId, Long userId) throws Exception;
 
-    void deleteComment(Long id);
-
-    List<CommentOutputDto> getAllComments();
+    CommentOutputDto updateComment(String updateText, Long commentId);
 
     CommentOutputDto getCommentById(Long commentId);
 
-    CommentOutputDto updateComment(String updateText, Long commentId);
+    List<CommentOutputDto> getAllComments();
 
-
+    void deleteComment(Long id);
 }
