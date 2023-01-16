@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.model.dto.EventInputDto;
 import ru.practicum.ewm.events.model.dto.EventOutputDto;
 import ru.practicum.ewm.events.model.dto.EventUpdateDto;
-import ru.practicum.ewm.events.services.EventServiceImpl;
+import ru.practicum.ewm.events.services.EventService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping(path = "/users/{userId}/events")
 public class EventController {
 
-    private final EventServiceImpl eventService;
+    private final EventService eventService;
 
     @PostMapping()
     public EventOutputDto createEvent(@Valid @PathVariable Long userId,

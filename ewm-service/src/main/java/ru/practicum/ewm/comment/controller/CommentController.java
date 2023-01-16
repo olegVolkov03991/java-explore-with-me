@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.comment.model.dto.CommentOutputDto;
-import ru.practicum.ewm.comment.service.CommentServiceImpl;
+import ru.practicum.ewm.comment.service.CommentService;
 
 import javax.validation.Valid;
 
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @RequestMapping("/users/{userId}/events/{eventId}/comments")
 public class CommentController {
 
-    private final CommentServiceImpl commentsService;
+    private final CommentService commentsService;
 
     @PostMapping
     public CommentOutputDto createComment(@Valid @RequestBody String text,

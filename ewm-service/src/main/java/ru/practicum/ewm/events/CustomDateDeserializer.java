@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 @JsonComponent // чтобы спринг использовал именно этот класс
 public class CustomDateDeserializer extends JsonDeserializer<LocalDateTime> {
     @Override
-            //переопредедние абстрактного метода deserialize класса JsonDeserializer
+    //переопредедние абстрактного метода deserialize класса JsonDeserializer
     public LocalDateTime deserialize(JsonParser p,  // р - переданная клиентом строка
                                      DeserializationContext deserializationContext) throws IOException {
         String date = p.getText();

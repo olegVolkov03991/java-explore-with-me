@@ -1,13 +1,11 @@
 package ru.practicum.ewm.comment.model;
 
-import ru.practicum.ewm.events.model.Event;
-import ru.practicum.ewm.user.model.User;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.practicum.ewm.events.model.Event;
+import ru.practicum.ewm.user.model.User;
 
 import javax.persistence.*;
 import java.util.Date;

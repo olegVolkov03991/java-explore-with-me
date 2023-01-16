@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.requests.model.dto.RequestOutputDto;
-import ru.practicum.ewm.requests.services.RequestServiceImpl;
+import ru.practicum.ewm.requests.services.RequestService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(path = "/users/{userId}/requests")
 public class RequestController {
-    private final RequestServiceImpl requestService;
+    private final RequestService requestService;
 
     @PostMapping
     public RequestOutputDto create(@Valid @PathVariable Long userId,
@@ -28,8 +28,6 @@ public class RequestController {
     public RequestOutputDto cancelYourEventRequest(@Valid @PathVariable Long userId, @Valid @PathVariable Long requestId) {
         return requestService.cancelYourEventRequest(userId, requestId);
     }
-
-
 
 
     @GetMapping

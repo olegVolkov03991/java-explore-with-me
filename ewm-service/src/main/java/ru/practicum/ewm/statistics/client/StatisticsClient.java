@@ -20,7 +20,6 @@ public class StatisticsClient extends BaseClient {
     private static final String RANGE_END = "2030-05-05 00:00:00";
 
     @Autowired
-//    public StatisticsClient(@Value("${STATS_SERVER_URL}") String serverUrl, RestTemplateBuilder builder) {
     public StatisticsClient(@Value("${STATS_SERVER_URL}") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder

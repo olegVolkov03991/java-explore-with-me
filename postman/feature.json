@@ -493,6 +493,20 @@
           ],
           "path": [
             "comments"
+          ],
+          "query": [
+            {
+              "key": "from",
+              "value": "0",
+              "description": "количество элементов, которые нужно пропустить для формирования текущего набора",
+              "disabled": true
+            },
+            {
+              "key": "size",
+              "value": "10",
+              "description": "количество элементов в наборе",
+              "disabled": true
+            }
           ]
         }
       },

@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.compilations.model.dto.CompilationInputDto;
 import ru.practicum.ewm.compilations.model.dto.CompilationOutputDto;
-import ru.practicum.ewm.compilations.services.CompilationServiceImpl;
+import ru.practicum.ewm.compilations.services.CompilationService;
 
 import javax.validation.Valid;
 
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping(path = "/admin/compilations")
 public class CompilationController {
 
-    private final CompilationServiceImpl compilationsService;
+    private final CompilationService compilationsService;
 
     @PostMapping()
     public CompilationOutputDto create(@Valid @RequestBody CompilationInputDto compilationsInputDto) {

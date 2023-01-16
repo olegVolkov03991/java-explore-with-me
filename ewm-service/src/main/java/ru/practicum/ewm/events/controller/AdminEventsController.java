@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.model.State;
 import ru.practicum.ewm.events.model.dto.EventInputDto;
 import ru.practicum.ewm.events.model.dto.EventOutputDto;
-import ru.practicum.ewm.events.services.EventServiceImpl;
+import ru.practicum.ewm.events.services.EventService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AdminEventsController {
 
-    private final EventServiceImpl eventService;
+    private final EventService eventService;
 
     @GetMapping
     public List<EventOutputDto> getAllEventsByParameters(@Valid @RequestParam(required = false) List<Long> users,
@@ -44,7 +44,6 @@ public class AdminEventsController {
     public EventOutputDto rejectionEvent(@Valid @PathVariable long eventId) {
         return eventService.rejectionEvent(eventId);
     }
-
 
 
     @PutMapping("/{eventId}")

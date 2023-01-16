@@ -2,6 +2,8 @@ package ru.practicum.ewm.comment.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.comment.model.Comment;
 import ru.practicum.ewm.comment.model.dto.CommentMapper;
@@ -33,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentOutputDto createComment(String text, Long eventId, Long userId) throws Exception {
         User user = findUserById(userId);
-        if(user.getBanUser()){
+        if (user.getBanUser()) {
             throw new Exception("\n" +
                     "This user has been banned and cannot post comments.");
         }
@@ -54,8 +56,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentOutputDto> getAllComments() {
-        return commentRepository.findAll().stream()
+    public List<CommentOutputDto> getAllComments(Integer from, Integer size) {
+        Page<Comment> comments;
+        comments = commentRepository.findAll(getPageRequest(from, size));
+        return comments.stream()
                 .map(this::getCommentOutputDto)
                 .collect(Collectors.toList());
     }
@@ -78,17 +82,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-    public CommentOutputDto getCommentOutputDto(Comment comment) {
+    private CommentOutputDto getCommentOutputDto(Comment comment) {
         return CommentMapper.toCommentOutputDto(comment);
     }
 
-    public User findUserById(Long userId){
-       return userRepository.findById(userId)
+    private User findUserById(Long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(ObjectNotFoundException::new);
     }
 
-    public Comment findCommentById(Long commentId){
+    private Comment findCommentById(Long commentId) {
         return commentRepository.findById(commentId)
                 .orElseThrow(ObjectNotFoundException::new);
+    }
+
+    private PageRequest getPageRequest(Integer from, Integer size) {
+        int page = from < size ? 0 : from / size;
+        return PageRequest.of(page, size);
     }
 }

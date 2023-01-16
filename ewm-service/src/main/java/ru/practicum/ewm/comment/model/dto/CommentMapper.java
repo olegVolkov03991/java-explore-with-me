@@ -12,7 +12,7 @@ public class CommentMapper {
 
     static Date date = new Date();
 
-    public static Comment toComment(User initiator, String text, Event event){
+    public static Comment toComment(User initiator, String text, Event event) {
         return Comment.builder()
                 .createdOn(date)
                 .initiator(initiator)
@@ -21,7 +21,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public static CommentOutputDto toCommentOutputDto(Comment comment){
+    public static CommentOutputDto toCommentOutputDto(Comment comment) {
         return CommentOutputDto.builder()
                 .id(comment.getId())
                 .createdOn(comment.getCreatedOn())

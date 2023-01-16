@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.compilations.model.dto.CompilationOutputDto;
-import ru.practicum.ewm.compilations.services.CompilationServiceImpl;
+import ru.practicum.ewm.compilations.services.CompilationService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(path = "/compilations")
 public class CompilationAdminController {
 
-    private final CompilationServiceImpl compilationsService;
+    private final CompilationService compilationsService;
 
     @GetMapping()
     public List<CompilationOutputDto> getCompilations(@Valid @RequestParam(required = false) boolean pinned,

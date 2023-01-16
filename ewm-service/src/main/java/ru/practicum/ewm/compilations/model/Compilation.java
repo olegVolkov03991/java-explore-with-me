@@ -27,10 +27,8 @@ public class Compilation {
     private String title;
 
 
-
     @Column(name = "pinned")
     private Boolean pinned;
-
 
 
     @ManyToMany(fetch = FetchType.LAZY)

@@ -12,7 +12,7 @@ public interface CommentService {
 
     CommentOutputDto getCommentById(Long commentId);
 
-    List<CommentOutputDto> getAllComments();
+    List<CommentOutputDto> getAllComments(Integer from, Integer size);
 
     void deleteComment(Long id);
 }

@@ -17,7 +17,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Page<Event> getEventsByInitiatorIdOrderByIdAsc(Long userId, Pageable pageable);
 
 
-
     @Query("select e from Event e " +
             "where (:users is null or e.initiator.id in :users)" +
             "and (:categories is null or e.category.id in :categories)" +
