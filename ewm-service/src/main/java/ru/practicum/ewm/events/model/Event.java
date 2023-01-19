@@ -1,10 +1,7 @@
 package ru.practicum.ewm.events.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.events.CustomDateDeserializer;
 import ru.practicum.ewm.locations.model.Location;
@@ -13,7 +10,8 @@ import ru.practicum.ewm.user.model.User;
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
