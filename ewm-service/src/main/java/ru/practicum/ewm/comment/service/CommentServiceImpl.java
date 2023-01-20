@@ -15,12 +15,13 @@ import ru.practicum.ewm.exceptions.ObjectNotFoundException;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Service
+@Transactional(readOnly=true)
 @RequiredArgsConstructor
 @Slf4j
 public class CommentServiceImpl implements CommentService {

@@ -14,11 +14,12 @@ import ru.practicum.ewm.user.model.dto.UserMapper;
 import ru.practicum.ewm.user.model.dto.UserOutputDto;
 import ru.practicum.ewm.user.repository.UserRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly=true)
 @RequiredArgsConstructor
 @Slf4j
 
