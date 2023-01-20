@@ -14,18 +14,18 @@ import ru.practicum.ewm.user.model.dto.UserMapper;
 import ru.practicum.ewm.user.model.dto.UserOutputDto;
 import ru.practicum.ewm.user.repository.UserRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly=true)
 @RequiredArgsConstructor
 @Slf4j
 
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
 
 
     @Override
@@ -35,12 +35,11 @@ public class UserServiceImpl implements UserService {
             throw new ConflictException("this name already exists");
         }
         log.info("<create USER> create user: name - {} ", userInputDto.getName());
-
-        return UserMapper.userOutputDto(
-                userRepository.save(
-                        UserMapper.toUser(userInputDto)));
+        User user = UserMapper.toUser(userInputDto);
+        user.setBanUser(false);
+        userRepository.save(user);
+        return UserMapper.userOutputDto(user);
     }
-
 
 
     @Override
@@ -50,7 +49,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(ObjectNotFoundException::new);
         userRepository.deleteById(id);
     }
-
 
 
     @Override
@@ -64,6 +62,26 @@ public class UserServiceImpl implements UserService {
         return users.stream()
                 .map(UserMapper::userOutputDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void userBan(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(ObjectNotFoundException::new);
+        user.setBanUser(true);
+        log.info("user {}", user.getName() + " banned");
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void userUnban(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(ObjectNotFoundException::new);
+        user.setBanUser(false);
+        log.info("user {}", user.getName() + " unBanned");
+        userRepository.save(user);
     }
 
     private PageRequest getPageRequest(Integer from, Integer size) {

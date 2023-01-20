@@ -22,13 +22,14 @@ import ru.practicum.ewm.statistics.client.StatisticsClient;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.repository.UserRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly=true)
 @RequiredArgsConstructor
 @Slf4j
 public class EventServiceImpl implements EventService {

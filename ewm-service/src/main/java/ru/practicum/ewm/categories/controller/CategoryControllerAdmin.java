@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.categories.model.dto.CategoryInputDto;
 import ru.practicum.ewm.categories.model.dto.CategoryOutputDto;
-import ru.practicum.ewm.categories.services.CategoryServiceImpl;
+import ru.practicum.ewm.categories.services.CategoryService;
 
 import javax.validation.Valid;
 
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping(path = "/admin/categories")
 public class CategoryControllerAdmin {
 
-    private final CategoryServiceImpl categoryService;
+    private final CategoryService categoryService;
 
     @PostMapping
     public CategoryOutputDto create(@Valid @RequestBody CategoryInputDto categoryInputDto) {

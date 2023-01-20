@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.model.dto.EventOutputDto;
-import ru.practicum.ewm.events.services.EventServiceImpl;
+import ru.practicum.ewm.events.services.EventService;
 import ru.practicum.ewm.statistics.aop.CreatingHit;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping(path = "/events")
 public class EventPublicController {
 
-    private final EventServiceImpl eventService;
+    private final EventService eventService;
 
 
     @GetMapping("/{id}")
@@ -48,9 +48,9 @@ public class EventPublicController {
     @GetMapping("/loc")
     @CreatingHit
     public List<EventOutputDto> getEventsByLoc(HttpServletRequest request,
-                                                    @RequestParam Double lat,
-                                                    @RequestParam Double lon,
-                                                    @RequestParam Double distance) {
+                                               @RequestParam Double lat,
+                                               @RequestParam Double lon,
+                                               @RequestParam Double distance) {
         return eventService.getEventsByLoc(lat, lon, distance);
     }
 }

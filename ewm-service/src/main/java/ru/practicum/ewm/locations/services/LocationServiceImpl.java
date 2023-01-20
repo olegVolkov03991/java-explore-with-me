@@ -13,14 +13,14 @@ import ru.practicum.ewm.locations.model.dto.LocationOutputDto;
 import ru.practicum.ewm.locations.model.dto.LocationOutputDtoWithDistance;
 import ru.practicum.ewm.locations.repository.LocationRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-
 @Slf4j
 @Service
+@Transactional(readOnly=true)
 @RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.locations.model.dto.LocationInputDto;
 import ru.practicum.ewm.locations.model.dto.LocationOutputDto;
 import ru.practicum.ewm.locations.model.dto.LocationOutputDtoWithDistance;
-import ru.practicum.ewm.locations.services.LocationServiceImpl;
+import ru.practicum.ewm.locations.services.LocationService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -20,11 +20,9 @@ import java.util.List;
 @RequestMapping(path = "/admin/location")
 public class LocationController {
 
-    private final LocationServiceImpl locationService;
+    private final LocationService locationService;
 
     /**
-
-     *
      * @param locationInputDto - данные добавляемой локации
      */
     @PostMapping()
@@ -33,8 +31,6 @@ public class LocationController {
     }
 
     /**
-
-     *
      * @param locId - id локации
      */
     @GetMapping("/{locId}")
@@ -43,8 +39,6 @@ public class LocationController {
     }
 
     /**
-
-     *
      * @param lat         - широта точки центра области поиска
      * @param lon         - долгота точки центра области поиска
      * @param distance    - радиус области поиска

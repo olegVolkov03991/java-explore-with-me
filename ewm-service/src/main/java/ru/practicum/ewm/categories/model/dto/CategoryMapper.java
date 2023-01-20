@@ -12,10 +12,10 @@ public class CategoryMapper {
     }
 
     public static CategoryOutputDto toCategoryOutputDto(Category category) {
-       return CategoryOutputDto.builder()
-               .id(category.getId())
-               .name(category.getName())
-               .build();
+        return CategoryOutputDto.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .build();
     }
 
 }

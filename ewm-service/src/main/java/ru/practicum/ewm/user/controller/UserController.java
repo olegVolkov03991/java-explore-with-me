@@ -5,7 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.user.model.dto.UserInputDto;
 import ru.practicum.ewm.user.model.dto.UserOutputDto;
-import ru.practicum.ewm.user.services.UserServiceImpl;
+import ru.practicum.ewm.user.services.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(path = "/admin/users")
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @PostMapping
     public UserOutputDto create(@Valid @RequestBody UserInputDto userInputDto) {
@@ -35,5 +35,15 @@ public class UserController {
                                         @Valid @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                         @Valid @RequestParam(defaultValue = "10") @Positive Integer size) {
         return userService.getUsers(ids, from, size);
+    }
+
+    @PatchMapping("/{userId}")
+    public void userBan(@PathVariable Long userId) {
+        userService.userBan(userId);
+    }
+
+    @PatchMapping("/{userId}/unban")
+    public void userUnban(@PathVariable Long userId) {
+        userService.userUnban(userId);
     }
 }

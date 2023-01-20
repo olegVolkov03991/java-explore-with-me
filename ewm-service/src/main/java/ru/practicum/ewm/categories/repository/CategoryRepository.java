@@ -11,7 +11,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 
     Page<Category> getCategoriesByIdIn(List<Long> id,
-                                                   Pageable pageable);
+                                       Pageable pageable);
 
     boolean existsByName(String name);
 }

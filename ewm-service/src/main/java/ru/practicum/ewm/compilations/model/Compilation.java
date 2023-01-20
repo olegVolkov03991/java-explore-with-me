@@ -1,16 +1,14 @@
 package ru.practicum.ewm.compilations.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.practicum.ewm.events.model.Event;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
@@ -27,10 +25,8 @@ public class Compilation {
     private String title;
 
 
-
     @Column(name = "pinned")
     private Boolean pinned;
-
 
 
     @ManyToMany(fetch = FetchType.LAZY)
